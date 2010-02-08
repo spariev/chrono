@@ -71,7 +71,7 @@
                           :minutes)))
   (is (= 6 (int (time-between christmas new-years :day)))))
 
-#_(deftest test-date-seq
+(deftest test-date-seq
   (is (= (list christmas
                (date 2007 12 26, 3 0 02)
                (date 2007 12 27, 3 0 02)
@@ -152,5 +152,22 @@
          (are-overlapping? [start end] [(joda-date "2009-06-11T08:45:27Z") (joda-date "2009-06-11T08:45:27Z")])))
     (is (false?
         (are-overlapping? [start end] [start1 nil])))))
+
+(deftest locale-use-test
+  (do
+    (binding [*locale* :ru]
+      (is (= "25.12.07" (format-date christmas :short-date)))
+      (is (= "25.12.07 3:00" (format-date christmas :short-date-time))))
+    (binding [*locale* :us]
+      (is (= "12/25/07" (format-date christmas :short-date)))
+      (is (= "12/25/07 3:00 AM" (format-date christmas :short-date-time))))))
+
+(deftest locale-creation-test
+  (is (not (get-locale nil)))
+  (is (get-locale :it))
+  (is (= "UA" (.getCountry (get-locale :ua)))))
+
+(deftest java-constant-locales-test
+  (is (= "IT" (.getCountry (get-locale :italy)))))
 
 #_(run-tests)

@@ -274,13 +274,13 @@
   Amount is one if not specified."
   ([the-date amount units]
      (let [d (the-date :datetime)]
-       (date (cond (or (= :years units) (= :year units)) (.plusYears d amount) 
-                   (or (= :months units) (= :month units)) (.plusMonths d amount) 
-                   (or (= :days units) (= :day units)) (.plusDays d amount) 
-                   (or (= :hours units) (= :hour units)) (.plusHours d amount) 
-                   (or (= :minutes units)  (= :minute units)) (.plusMinutes d amount) 
-                   (or (= :seconds units)  (= :second units)) (.plusSeconds d amount) 
-                   (= :millis units) (.plusMillis d amount) 
+       (date (cond (or (= :years units) (= :year units)) (.plusYears d amount)
+                   (or (= :months units) (= :month units)) (.plusMonths d amount)
+                   (or (= :days units) (= :day units)) (.plusDays d amount)
+                   (or (= :hours units) (= :hour units)) (.plusHours d amount)
+                   (or (= :minutes units)  (= :minute units)) (.plusMinutes d amount)
+                   (or (= :seconds units)  (= :second units)) (.plusSeconds d amount)
+                   (= :millis units) (.plusMillis d amount)
                     :otherwise d))))
   ([the-date units]
      (later the-date 1 units)))
@@ -384,10 +384,37 @@
       :compact-date (org.joda.time.format.DateTimeFormat/forPattern "yyyyMMdd")
       })
 
+(def *locales*
+     {:ru (java.util.Locale. "ru" "RU")
+      :us (java.util.Locale/US)
+      :canada (java.util.Locale/CANADA)
+      :canada_french (java.util.Locale/CANADA_FRENCH)
+      :china (java.util.Locale/CHINA)
+      :chinese  (java.util.Locale/CHINESE)
+      :english  (java.util.Locale/ENGLISH)
+      :france   (java.util.Locale/FRANCE)
+      :french   (java.util.Locale/FRENCH)
+      :german   (java.util.Locale/GERMAN)
+      :germany  (java.util.Locale/GERMANY)
+      :italian  (java.util.Locale/ITALIAN)
+      :italy    (java.util.Locale/ITALY)
+      :japan    (java.util.Locale/JAPAN)
+      :japanese (java.util.Locale/JAPANESE)
+      :korea    (java.util.Locale/KOREA)
+      :korea    (java.util.Locale/KOREAN)
+      :prc      (java.util.Locale/PRC)
+      :simplified_chinese (java.util.Locale/SIMPLIFIED_CHINESE)
+      :taiwan  (java.util.Locale/TAIWAN)
+      :traditional_chinese (java.util.Locale/TRADITIONAL_CHINESE)
+      :uk (java.util.Locale/UK)
+      })
+
 (defn get-locale
   [locale]
-     ({:ru (java.util.Locale. "ru" "RU")
-      :us (java.util.Locale/US)} locale))
+  (if (not locale) nil
+      (if (*locales* locale)
+	(*locales* locale)
+	(java.util.Locale. (name locale) (.toUpperCase (name locale))))))
 
 (def *locale* nil) ; use default locale
 
