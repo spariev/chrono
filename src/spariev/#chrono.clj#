@@ -274,13 +274,13 @@
   Amount is one if not specified."
   ([the-date amount units]
      (let [d (the-date :datetime)]
-       (date (cond (or (= :years units) (= :year units)) (.plusYears d amount) 
-                   (or (= :months units) (= :month units)) (.plusMonths d amount) 
-                   (or (= :days units) (= :day units)) (.plusDays d amount) 
-                   (or (= :hours units) (= :hour units)) (.plusHours d amount) 
-                   (or (= :minutes units)  (= :minute units)) (.plusMinutes d amount) 
-                   (or (= :seconds units)  (= :second units)) (.plusSeconds d amount) 
-                   (= :millis units) (.plusMillis d amount) 
+       (date (cond (or (= :years units) (= :year units)) (.plusYears d amount)
+                   (or (= :months units) (= :month units)) (.plusMonths d amount)
+                   (or (= :days units) (= :day units)) (.plusDays d amount)
+                   (or (= :hours units) (= :hour units)) (.plusHours d amount)
+                   (or (= :minutes units)  (= :minute units)) (.plusMinutes d amount)
+                   (or (= :seconds units)  (= :second units)) (.plusSeconds d amount)
+                   (= :millis units) (.plusMillis d amount)
                     :otherwise d))))
   ([the-date units]
      (later the-date 1 units)))
